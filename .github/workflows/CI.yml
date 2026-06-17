@@ -1,0 +1,21 @@
+name: CI - Check Code
+
+on: [push]          # runs on EVERY push, to ANY branch (sub-branches too!)
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install checker
+        run: pip install flake8
+
+      - name: Check for syntax / indentation errors
+        run: flake8 . --select=E999 --show-source
